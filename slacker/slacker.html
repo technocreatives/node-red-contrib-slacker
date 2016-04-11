@@ -1,26 +1,70 @@
+<script type="text/x-red" data-template-name="slack-in">
+    <div class="form-row">
+        <label for="node-input-controller"><i class="fa fa-globe"></i> Slack Controller</label>
+        <input type="text" id="node-input-controller">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</span></label>
+        <input type="text" id="node-input-name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="slack-in">
+    <p>Receives messages from slack</p>
+    <p>Outputs a message with the properties:</p>
+    <ul>
+       <li><code>msg.topic</code></li>
+       <li><code>msg.payload</code></li>
+       <li><code>msg.qos</code></li>
+       <li><code>msg.retain</code></li>
+    </ul>
+    <p><code>msg.payload</code> will be a String, unless it is detected as a binary buffer.</p>
+</script>
+
 <script type="text/javascript">
-    RED.nodes.registerType('slacker',{
-        category: 'function',
-        color: '#a6bbcf',
+    RED.nodes.registerType('slack-in',{
+        category: 'slack',
         defaults: {
-            name: {value:""}
+            name: {value:""},
+            controller: {type:"slack-bot-controller", required:true}
         },
-        inputs:1,
+        color:"#d8bfd8",
+        inputs:0,
         outputs:1,
-        icon: "file.png",
+        icon: "bridge.png",
         label: function() {
-            return this.name||"slacker";
+            return this.name||"slack";
+        },
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
         }
     });
 </script>
 
-<script type="text/x-red" data-template-name="slacker">
+<script type="text/x-red" data-template-name="slack-bot-controller">
     <div class="form-row">
-        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="Name">
+        <label for="node-config-input-name"><i class="fa fa-globe"></i> Name</label>
+        <input type="text" id="node-config-input-name">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-token"><i class="fa fa-tag"></i> Token</label>
+        <input type="text" id="node-config-input-token">
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="slacker">
-    <p>A simple node that converts the message payloads into all lower-case characters</p>
+<script type="text/x-red" data-help-name="slack-bot-controller">
+    <p>Help about the controller</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('slack-bot-controller',{
+        category: 'config',
+        defaults: {
+            name: {value:"MyBot", required:true},
+            token: {value:"",required:true}
+        },
+        label: function() {
+            return this.name;
+        }
+    });
 </script>

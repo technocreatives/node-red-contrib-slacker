@@ -2,12 +2,19 @@
   "name": "node-red-contrib-slacker",
   "version": "0.0.1",
   "description": "Node RED Slack integration built on top of botkit from howdy.ai",
-  "keywords": [ "node-red", "slack", "bot" ],
+  "keywords": [
+    "node-red",
+    "slack",
+    "bot"
+  ],
   "node-red": {
     "nodes": {
       "slacker": "slacker/slacker.js"
     }
-    },
+  },
   "author": "Oskar Hagberg",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "botkit": "0.0.15"
+  }
 }
