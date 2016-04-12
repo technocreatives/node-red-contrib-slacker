@@ -136,6 +136,49 @@ module.exports = function(RED) {
 
   RED.nodes.registerType('slack-bot-controller',SlackBotControllerNode);
 
+  function SlackOutNode(n) {
+    RED.nodes.createNode(this,n);
+
+    this.channel = n.channel;
+    this.controller = RED.nodes.getNode(n.controller);
+    var node = this;
+
+    if(!this.controller) {
+      this.error(RED._("Missing slack bot controller"));
+      return;
+    }
+    this.status({fill:"red",shape:"ring",text:"Disconnected"});
+
+    this.on('input', function(msg){
+      var m = {};
+      m.channel = node.channel || msg.channel;
+      if(!m.hasOwnProperty('channel')) {
+        node.warn(RED._("Channel is missing"));
+        return;
+      }
+      m.text = msg.payload;
+      if(m.hasOwnProperty('text')){
+        node.controller.bot.say(m);
+      }
+    });
+
+    this.controller.register(this);
+
+    if(this.controller.connected) {
+      this.status({fill:"green",shape:"ring",text:"Connected"});
+    }
+
+    this.on('close', function(done) {
+      if(!node.controller) {
+        return done();
+      }
+      node.controller.deregister(node, done);
+      
+    });
+    
+  }
+  RED.nodes.registerType('slack-out',SlackOutNode);
+
   function SlackInNode(n) {
     RED.nodes.createNode(this,n);
 
