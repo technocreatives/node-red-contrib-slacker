@@ -31,10 +31,11 @@
             channel: {value:""},
             controller: {type:"slack-bot-controller", required:true}
         },
-        color:"#d8bfd8",
+        color:"#42c299",
         inputs:1,
         outputs:0,
-        icon: "bridge.png",
+        align: "right",
+        icon: "hash.png",
         label: function() {
             return this.name||this.channel||"slack";
         },
@@ -83,10 +84,10 @@
             events: {value:"direct_mention", required:true},
             controller: {type:"slack-bot-controller", required:true}
         },
-        color:"#d8bfd8",
+        color:"#42c299",
         inputs:0,
         outputs:1,
-        icon: "bridge.png",
+        icon: "hash.png",
         label: function() {
             return this.name||this.events||"slack";
         },
