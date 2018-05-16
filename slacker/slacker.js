@@ -157,6 +157,8 @@ module.exports = function(RED) {
         return;
       }
       m.text = msg.payload;
+      //Added attachments
+      m.attachments = msg.attachments;
       if(m.hasOwnProperty('text')){
         node.controller.bot.say(m);
       }
